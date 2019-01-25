@@ -1,7 +1,7 @@
 {
-  "name": "monaco-editor-webpack-plugin",
+  "name": "monaco-editor-webpack-plugin-embeddable",
   "version": "1.7.0",
-  "description": "A webpack plugin for the Monaco Editor",
+  "description": "A modified version of the webpack plugin for Monaco Editor",
   "main": "index.js",
   "typings": "./index.d.ts",
   "scripts": {
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Microsoft/monaco-editor-webpack-plugin.git"
+    "url": "git+https://github.com/CyriacBr/monaco-editor-webpack-plugin-embeddable.git"
   },
   "keywords": [
     "webpack",

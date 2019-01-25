@@ -54,10 +54,12 @@ class MonacoWebpackPlugin {
     const languages = options.languages || Object.keys(languagesById);
     const features = getFeaturesIds(options.features || [], featuresById);
     const output = options.output || '';
+    const embeddableLangs = options.embeddableLangs || [];
     this.options = {
       languages: languages.map((id) => languagesById[id]).filter(Boolean),
       features: features.map(id => featuresById[id]).filter(Boolean),
       output,
+      embeddableLangs
     };
   }
 
@@ -97,6 +99,9 @@ function createLoaderRules(languages, features, workers, outputPath, publicPath)
   if (workerPaths['typescript']) {
     // javascript shares the same worker
     workerPaths['javascript'] = workerPaths['typescript'];
+    for (const lang of embeddableLangs) {
+      workerPaths[lang] = workerPaths['typescript'];
+    }
   }
   if (workerPaths['css']) {
     // scss and less share the same worker
