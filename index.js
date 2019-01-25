@@ -64,13 +64,13 @@ class MonacoWebpackPlugin {
   }
 
   apply(compiler) {
-    const { languages, features, output } = this.options;
+    const { languages, features, output, embeddableLangs } = this.options;
     const publicPath = getPublicPath(compiler);
     const modules = [EDITOR_MODULE].concat(languages).concat(features);
     const workers = modules.map(
       ({ label, alias, worker }) => worker && (mixin({ label, alias }, worker))
     ).filter(Boolean);
-    const rules = createLoaderRules(languages, features, workers, output, publicPath);
+    const rules = createLoaderRules(languages, embeddableLangs, features, workers, output, publicPath);
     const plugins = createPlugins(workers, output);
     addCompilerRules(compiler, rules);
     addCompilerPlugins(compiler, plugins);
@@ -91,7 +91,7 @@ function getPublicPath(compiler) {
   return compiler.options.output && compiler.options.output.publicPath || '';
 }
 
-function createLoaderRules(languages, features, workers, outputPath, publicPath) {
+function createLoaderRules(languages, embeddableLangs, features, workers, outputPath, publicPath) {
   if (!languages.length && !features.length) { return []; }
   const languagePaths = flatArr(languages.map(({ entry }) => entry).filter(Boolean));
   const featurePaths = flatArr(features.map(({ entry }) => entry).filter(Boolean));
